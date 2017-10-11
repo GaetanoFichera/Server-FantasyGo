@@ -1,5 +1,6 @@
 package Controller;
 
+import Util.RispostaRichiesta;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
 /**
@@ -7,12 +8,12 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
  */
 public class ControllerFacade {
 
-    public JSONPObject execute(String richiesta, JSONPObject jsonRichiesta){
-        JSONPObject risposta = null;
+    public RispostaRichiesta execute(String richiesta, Object object){
+         RispostaRichiesta risposta = null;
 
         try {
             IControllerStrategy controllerStrategy = (IControllerStrategy) Class.forName("Controller.ControllerStrategy.ContollerStrategy" + richiesta).newInstance();
-            risposta = controllerStrategy.richiesta(jsonRichiesta);
+            risposta = controllerStrategy.richiesta(object);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

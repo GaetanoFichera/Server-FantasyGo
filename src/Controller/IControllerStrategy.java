@@ -1,5 +1,6 @@
 package Controller;
 
+import Util.RispostaRichiesta;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
 /**
@@ -7,5 +8,5 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
  */
 public interface IControllerStrategy {
 
-     JSONPObject richiesta(JSONPObject jsonpObject);
+     RispostaRichiesta richiesta(Object rispostaRichiesta);
 }

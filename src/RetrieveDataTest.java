@@ -1,5 +1,5 @@
 import Entity.ZonaDiCaccia;
-import Utils.HibernateUtil;
+import Util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -44,6 +44,6 @@ public class RetrieveDataTest {
             }
         }
 
-        HibernateUtil.shutdown();
+
     }
 }
