@@ -9,30 +9,18 @@ import java.util.ArrayList;
  */
 public class AnalisiZonaDiCaccia {
 
-    public AnalisiZonaDiCaccia() {
-    }
+    public static boolean pointIsInsideArea(ArrayList<Coordinata> confini, Coordinata punto) {
+        int i;
+        int j;
+        boolean result = false;
 
-    public boolean coordinateInRegion(ArrayList<Coordinata> region, Coordinata coord) {
-        int i, j;
-        boolean isInside = false;
-        //create an array of coordinates from the region boundary list
-        int sides = region.size();
-        for (i = 0, j = sides - 1; i < sides; j = i++) {
-            //verifying if your coordinate is inside your region
-            if (
-                    (
-                            (
-                                    (region.get(i).getLongitudine() <= coord.getLongitudine()) && (coord.getLongitudine() < region.get(j).getLongitudine())
-                            ) || (
-                                    (region.get(j).getLongitudine() <= coord.getLongitudine()) && (coord.getLongitudine() < region.get(i).getLongitudine())
-                            )
-                    ) &&
-                            (coord.getLatitudine() < (region.get(j).getLatitudine() - region.get(i).getLatitudine()) * (coord.getLatitudine() -
-                                    region.get(i).getLongitudine()) / (region.get(j).getLongitudine() - region.get(i).getLongitudine()) + region.get(i).getLatitudine())
-                    ) {
-                isInside = true;
+        //x is Lat & y is Long
+        for(i = 0, j = confini.size() - 1; i < confini.size(); j = i++){
+            if ((confini.get(i).getLongitudine() > punto.getLongitudine()) != (confini.get(j).getLongitudine() > punto.getLongitudine()) &&
+                    (punto.getLatitudine() < (confini.get(j).getLatitudine() - confini.get(i).getLatitudine()) * (punto.getLongitudine() - confini.get(i).getLongitudine()) / (confini.get(j).getLongitudine()-confini.get(i).getLongitudine()) + confini.get(i).getLatitudine())) {
+                result = !result;
             }
         }
-        return isInside;
+        return result;
     }
 }

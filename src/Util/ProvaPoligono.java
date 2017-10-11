@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ProvaPoligono {
     public static void main(String[] args) {
 
-        Coordinata coordinata = new Coordinata(42.362331, 13.364290); //punto da controllare
+        Coordinata coordinata = new Coordinata(13.364295, 42.362331); //punto da controllare
 
         //poligono Area2
         Coordinata coordinata1 = new Coordinata(13.3360291,42.3763001);
@@ -24,17 +24,7 @@ public class ProvaPoligono {
         region.add(coordinata4);
         region.add(coordinata5);
 
-
-
-
-
-
-
-
-
-
-        AnalisiZonaDiCaccia analisiZonaDiCaccia = new AnalisiZonaDiCaccia();
-        boolean presente = analisiZonaDiCaccia.coordinateInRegion(region, coordinata);
+        boolean presente = AnalisiZonaDiCaccia.pointIsInsideArea(region, coordinata);
         System.out.println(presente);
         }
     }
