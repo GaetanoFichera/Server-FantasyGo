@@ -1,3 +1,5 @@
+package Tests;
+
 import Entity.ZonaDiCaccia;
 import Util.HibernateUtil;
 import org.hibernate.Session;

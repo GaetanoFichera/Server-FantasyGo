@@ -1,12 +1,10 @@
 package Controller;
 
-import Util.RispostaRichiesta;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import Util.Messaggio;
 
 /**
  * Created by root on 11/10/17.
  */
 public interface IControllerStrategy {
-
-     RispostaRichiesta richiesta(Object rispostaRichiesta);
+     Messaggio eseguiRichiesta(Object pacchettoDalClient);
 }

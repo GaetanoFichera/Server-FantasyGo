@@ -26,6 +26,7 @@ public class HibernateUtil {
 
     private static ServiceRegistry registry;
 
+    /*
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
@@ -46,7 +47,9 @@ public class HibernateUtil {
             throw new ExceptionInInitializerError(ex);
         }
     }
+    */
 
+    /*
     private static SessionFactory buildSessionAnnotationFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
@@ -67,7 +70,7 @@ public class HibernateUtil {
             throw new ExceptionInInitializerError(ex);
         }
     }
-
+    */
 
     private static SessionFactory buildSessionJavaConfigFactory() {
         try {
@@ -112,16 +115,19 @@ public class HibernateUtil {
         }
     }
 
+    /*
     public static SessionFactory getSessionFactory() {
         if(sessionFactory == null) sessionFactory = buildSessionFactory();
         return sessionFactory;
     }
+    */
 
+    /*
     public static SessionFactory getSessionAnnotationFactory() {
         if(sessionAnnotationFactory == null) sessionAnnotationFactory = buildSessionAnnotationFactory();
         return sessionAnnotationFactory;
     }
-
+    */
 
     public static SessionFactory getSessionJavaConfigFactory() {
         if(sessionJavaConfigFactory == null) sessionJavaConfigFactory = buildSessionJavaConfigFactory();

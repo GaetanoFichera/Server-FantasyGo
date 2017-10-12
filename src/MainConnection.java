@@ -1,4 +1,4 @@
-import Api.Helloword;
+import Api.ApiTest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -14,7 +14,7 @@ public class MainConnection extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
-        h.add(Helloword.class);
+        h.add(ApiTest.class);
         return h;
     }
 }

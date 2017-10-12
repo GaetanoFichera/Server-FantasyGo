@@ -83,27 +83,23 @@ public class ZonaDiCacciaUtil {
     private static ArrayList<Coordinata> listToArrayListCoordinata(java.util.List<Point2D> points){
         ArrayList<Coordinata> coordinate = new ArrayList<>();
 
-        Coordinata coordinataAux = new Coordinata();
-
-        for (Point2D point2DS : points){
-            coordinataAux.setLatitudine(point2DS.getX());
-            coordinataAux.setLongitudine(point2DS.getY());
-            coordinate.add(coordinataAux);
+        for(int i = 0; i < points.size(); i++){
+            coordinate.add(new Coordinata(points.get(i).getX(), points.get(i).getY()));
         }
 
         return coordinate;
     }
 
-    public static ZonaDiCaccia centroAreaContainingCoordinata(ArrayList<Coordinata> centri, ArrayList<ZonaDiCaccia> zone, Coordinata punto){
-        Coordinata centroAreaContenente = new Coordinata();
+    public static ZonaDiCaccia areaContainingCoordinata(ArrayList<Coordinata> centriNonOrdinati, ArrayList<ZonaDiCaccia> zone, Coordinata punto){
 
         boolean trovata = false;
         ZonaDiCaccia zonaContainingCoordinata = null;
+        ArrayList<Coordinata> centri = coordinataSort(centriNonOrdinati, punto);
 
         for (int i = 0; i < centri.size() && trovata == false; i++){
             for (int j = 0; j < zone.size() && trovata == false; j++){
-                if (zone.get(j).getCoordinataCentro().getLatitudine() == centri.get(i).getLatitudine() &&
-                        zone.get(j).getCoordinataCentro().getLongitudine() == centri.get(i).getLongitudine()){
+                if (zone.get(j).getCoordinataCentro().getLatitudine().compareTo(centri.get(i).getLatitudine()) == 0 &&
+                        zone.get(j).getCoordinataCentro().getLongitudine().compareTo(centri.get(i).getLongitudine()) == 0){
                     if (coordinataInsideZona(zone.get(j).getCoordinateConfini(), punto)){
                         trovata = true;
                         zonaContainingCoordinata = zone.get(j);

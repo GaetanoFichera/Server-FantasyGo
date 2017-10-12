@@ -1,3 +1,5 @@
+package Tests;
+
 import Util.Coordinata;
 import Util.ZonaDiCacciaUtil;
 
@@ -26,7 +28,7 @@ public class ProvaPoligono {
         region.add(coordinata5);
 
         boolean presente = ZonaDiCacciaUtil.coordinataInsideZona(region, coordinata);
-        System.out.println("ciao");
+        System.out.println(presente);
         }
     }
 
