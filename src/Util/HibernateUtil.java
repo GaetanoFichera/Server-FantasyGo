@@ -3,6 +3,7 @@ package Util;
 import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -23,6 +24,8 @@ public class HibernateUtil {
     //Property based configuration
     private static SessionFactory sessionJavaConfigFactory;
 
+    private static ServiceRegistry registry;
+
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
@@ -30,10 +33,10 @@ public class HibernateUtil {
             configuration.configure();
             System.out.println("Hibernate Configuration loaded");
 
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+            registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             System.out.println("Hibernate serviceRegistry created");
 
-            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
 
             return sessionFactory;
         }
@@ -51,10 +54,10 @@ public class HibernateUtil {
             configuration.configure("hibernate-annotation.cfg.xml");
             System.out.println("Hibernate Annotation Configuration loaded");
 
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+            registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             System.out.println("Hibernate Annotation serviceRegistry created");
 
-            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
 
             return sessionFactory;
         }
@@ -90,10 +93,10 @@ public class HibernateUtil {
             configuration.addAnnotatedClass(Giocatore.class);
             configuration.addAnnotatedClass(ZonaDiCaccia.class);
 
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+            registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             System.out.println("Hibernate Java Config serviceRegistry created");
 
-            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
 
             return sessionFactory;
         }
@@ -103,6 +106,11 @@ public class HibernateUtil {
         }
     }
 
+    public static void shutdown() {
+        if (registry != null) {
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+    }
 
     public static SessionFactory getSessionFactory() {
         if(sessionFactory == null) sessionFactory = buildSessionFactory();

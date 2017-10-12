@@ -28,6 +28,7 @@ public class Helloword {
         Session session = sessionFactory.openSession();
 
         ZonaDiCaccia zona = null;
+
         try {
             List<ZonaDiCaccia> zonedicaccias = session.createQuery(
                     "select z " +
@@ -38,10 +39,11 @@ public class Helloword {
                 zona = zone;
 
                 System.out.println("ZoneDiCaccia: " + zone.getId() + " : "
-                        + zone.getCentroLatitudine() + " : "
-                        + zone.getCentroLongitudine() + " : "
                         + zone.getCoordinataCentro().getLatitudine() + " : "
-                        + zone.getCoordinataCentro().getLongitudine());
+                        + zone.getCoordinataCentro().getLongitudine() + " : "
+                        + "Numero di Confini = " + zone.getCoordinateConfini().size() + " : "
+                        + zone.getCoordinateConfini().toString()
+                );
             }
 
             // Commit data.
@@ -58,8 +60,15 @@ public class Helloword {
             }
         }
 
+        HibernateUtil.shutdown();
+
         String risultato = "";
-        if(zona != null) risultato = "Giovanni Finocchio : " + zona.getId();
+        if(zona != null) risultato ="ZoneDiCaccia: " + zona.getId() + " : "
+                                + zona.getCoordinataCentro().getLatitudine() + " : "
+                                + zona.getCoordinataCentro().getLongitudine() + " : "
+                                + "Numero di Confini = " + zona.getCoordinateConfini().size() + " : "
+                                + zona.getCoordinateConfini().toString();
+
         else risultato = "Non ho trovato niente";
 
         return risultato;

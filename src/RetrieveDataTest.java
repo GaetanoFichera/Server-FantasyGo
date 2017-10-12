@@ -12,7 +12,7 @@ import java.util.List;
 public class RetrieveDataTest {
 
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionJavaConfigFactory();
 
         Session session = sessionFactory.openSession();
 
@@ -24,10 +24,11 @@ public class RetrieveDataTest {
 
             for (ZonaDiCaccia zone : zonedicaccias) {
                 System.out.println("ZoneDiCaccia: " + zone.getId() + " : "
-                        + zone.getCentroLatitudine() + " : "
-                        + zone.getCentroLongitudine() + " : "
                         + zone.getCoordinataCentro().getLatitudine() + " : "
-                        + zone.getCoordinataCentro().getLongitudine());
+                        + zone.getCoordinataCentro().getLongitudine() + " : "
+                        + "Numero di Confini = " + zone.getCoordinateConfini().size() + " : "
+                        + zone.getCoordinateConfini().toString()
+                );
             }
 
             // Commit data.
@@ -44,6 +45,6 @@ public class RetrieveDataTest {
             }
         }
 
-
+        HibernateUtil.shutdown();
     }
 }

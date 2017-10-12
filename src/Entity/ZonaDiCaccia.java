@@ -6,6 +6,7 @@ import org.apache.commons.lang.SerializationUtils;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.ArrayList;
 
 /**
  * Created by gaetano on 11/10/17.
@@ -18,20 +19,12 @@ public class ZonaDiCaccia {
     private String Id;
     @Column(name = "NOME", nullable = false, unique = true)
     private String Nome;
-    @Column(name = "CENTRO_LAT", nullable = false)
-    private Double CentroLatitudine;
-    @Column(name = "CENTRO_LONG", nullable = false)
-    private Double CentroLongitudine;
     @Column(name = "CENTRO", nullable = false)
     private byte[] CoordinataCentroAsByteArray;
+    @Column(name = "CONFINI", nullable = false)
+    private byte[] CoordinateConfiniAsByteArray;
 
     public ZonaDiCaccia() {}
-
-    public ZonaDiCaccia(String nome, Double centroLatitudine, Double centroLongitudine) {
-        Nome = nome;
-        CentroLatitudine = centroLatitudine;
-        CentroLongitudine = centroLongitudine;
-    }
 
     public String getId() {
         return Id;
@@ -49,23 +42,6 @@ public class ZonaDiCaccia {
         Nome = nome;
     }
 
-    public Double getCentroLatitudine() {
-        return CentroLatitudine;
-    }
-
-    public void setCentroLatitudine(Double centroLatitudine) {
-        CentroLatitudine = centroLatitudine;
-    }
-
-    public Double getCentroLongitudine() {
-        return CentroLongitudine;
-    }
-
-    public void setCentroLongitudine(Double centroLongitudine) {
-        CentroLongitudine = centroLongitudine;
-    }
-
-
     public byte[] getCoordinataCentroAsByteArray() {
         return CoordinataCentroAsByteArray;
     }
@@ -82,4 +58,19 @@ public class ZonaDiCaccia {
         CoordinataCentroAsByteArray = SerializationUtils.serialize(coordinata);
     }
 
+    public byte[] getCoordinateConfiniAsByteArray() {
+        return CoordinateConfiniAsByteArray;
+    }
+
+    public void setCoordinateConfiniAsByteArray(byte[] coordinateConfiniAsByteArray) {
+        CoordinateConfiniAsByteArray = coordinateConfiniAsByteArray;
+    }
+
+    public ArrayList<Coordinata> getCoordinateConfini(){
+        return ((ArrayList<Coordinata>) SerializationUtils.deserialize(CoordinateConfiniAsByteArray));
+    }
+
+    public void setCoordinateConfini(ArrayList<Coordinata> coordinateConfini){
+        CoordinateConfiniAsByteArray = SerializationUtils.serialize(coordinateConfini);
+    }
 }

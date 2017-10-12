@@ -1,4 +1,5 @@
-package Util;
+import Util.Coordinata;
+import Util.ZonaDiCacciaUtil;
 
 import java.util.ArrayList;
 
@@ -24,8 +25,8 @@ public class ProvaPoligono {
         region.add(coordinata4);
         region.add(coordinata5);
 
-        boolean presente = AnalisiZonaDiCaccia.pointIsInsideArea(region, coordinata);
-        System.out.println(presente);
+        boolean presente = ZonaDiCacciaUtil.coordinataInsideZona(region, coordinata);
+        System.out.println("ciao");
         }
     }
 

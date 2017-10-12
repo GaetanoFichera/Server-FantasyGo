@@ -11,6 +11,8 @@ public class Coordinata implements Serializable{
     private Double Latitudine;
     private Double Longitudine;
 
+    public Coordinata(){}
+
     public Coordinata(Double latitudine, Double longitudine) {
         Latitudine = latitudine;
         Longitudine = longitudine;
