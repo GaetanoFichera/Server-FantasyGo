@@ -3,10 +3,7 @@ package Controller.ControllerStrategy;
 import Controller.IControllerStrategy;
 import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
-import Util.Coordinata;
-import Util.HibernateUtil;
-import Util.Messaggio;
-import Util.ZonaDiCacciaUtil;
+import Util.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -56,13 +53,13 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
 
                 session.getTransaction().commit();
 
-                messaggioRisposta.setMessaggio(101);
+                messaggioRisposta.setMessaggio(CodeResult.OkConAggiornamenti);
                 messaggioRisposta.setObject(zonaNuova);
 
                 HibernateUtil.shutdown();
-            } else messaggioRisposta.setMessaggio(102); //Il Giocatore non è in nessuna delle Zone di Caccia presenti nel Db
+            } else messaggioRisposta.setMessaggio(CodeResult.ErroreRitenta); //Il Giocatore non è in nessuna delle Zone di Caccia presenti nel Db
             // (cosa succede quando il giocatore non è in nessuna delle zone esistenti?)
-        } else messaggioRisposta.setMessaggio(100); //Il Giocatore non ha cambiato Zona di Caccia
+        } else messaggioRisposta.setMessaggio(CodeResult.OkSenzaAggiornamenti); //Il Giocatore non ha cambiato Zona di Caccia
 
         return messaggioRisposta;
     }

@@ -2,7 +2,7 @@ package Tests;
 
 import Controller.ControllerFacade;
 import Entity.ZonaDiCaccia;
-import Util.InterpreteCodiciMessaggi;
+import Util.CodeResult;
 import Util.Messaggio;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class AggPosizioneTest {
         ControllerFacade controllerFacade = new ControllerFacade();
         Messaggio risposta = controllerFacade.execute("UpPositionG", listaRicevuta);
 
-        System.out.println(InterpreteCodiciMessaggi.getMessaggioErrore(risposta.getMessaggio()));
+        System.out.println(CodeResult.getMessaggioErrore(risposta.getMessaggio()));
         if (risposta.getObject() != null) System.out.println(((ZonaDiCaccia) risposta.getObject()).getId());
     }
 }

@@ -3,10 +3,10 @@ package Util;
 /**
  * Created by gaetano on 12/10/17.
  */
-public class InterpreteCodiciMessaggi {
-    private static final int Errore100 = 100; //Operazione andata a buon fine senza aggiornamento dati
-    private static final int Errore101 = 101; //Operazione andata a buon fine con aggiornamento dati
-    private static final int Errore102 = 102; //Operazione fallita, ritentare
+public class CodeResult {
+    public static final int OkSenzaAggiornamenti = 100; //Operazione andata a buon fine senza aggiornamento dati
+    public static final int OkConAggiornamenti = 101; //Operazione andata a buon fine con aggiornamento dati
+    public static final int ErroreRitenta = 102; //Operazione fallita, ritentare
 
     public static String getMessaggioErrore(int codiceErrore){
         String messaggioErrore = null;

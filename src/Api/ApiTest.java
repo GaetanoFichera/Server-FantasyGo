@@ -1,10 +1,9 @@
 package Api;
 
 import Controller.ControllerFacade;
-import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
 import Util.HibernateUtil;
-import Util.InterpreteCodiciMessaggi;
+import Util.CodeResult;
 import Util.Messaggio;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -47,7 +46,7 @@ public class ApiTest {
 
         String stringaMessaggio = "nada";
 
-        return InterpreteCodiciMessaggi.getMessaggioErrore(risposta.getMessaggio());
+        return CodeResult.getMessaggioErrore(risposta.getMessaggio());
     }
 
     private String RetrieveData(){
