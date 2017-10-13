@@ -21,7 +21,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
 
         Messaggio messaggioRisposta = new Messaggio();
 
-        //Casto il Pacchetto Ricevuto dal Client in quello che io desidero
+        //Trasformo mediante Cast il Pacchetto Ricevuto dal Client in quello che io desidero
         ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
         Coordinata coordinataDelGiocatore = new Coordinata();
         coordinataDelGiocatore.setLatitudine(Double.valueOf(datiDalGiocatore.get(4)));
