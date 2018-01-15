@@ -2,7 +2,10 @@ package Tests;
 
 import Util.Coordinata;
 import Util.ZonaDiCacciaUtil;
+import sun.reflect.annotation.TypeAnnotation;
 
+import javax.tools.JavaFileManager;
+import javax.xml.stream.Location;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +15,6 @@ public class ProvaPoligono {
     public static void main(String[] args) {
 
         Coordinata coordinata = new Coordinata(13.364295, 42.362331); //punto da controllare
-
         //poligono Area2
         Coordinata coordinata1 = new Coordinata(13.3360291,42.3763001);
         Coordinata coordinata2 = new Coordinata(13.3236694,42.3544847);

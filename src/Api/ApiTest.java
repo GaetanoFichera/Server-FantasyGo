@@ -5,13 +5,13 @@ import Entity.ZonaDiCaccia;
 import Util.HibernateUtil;
 import Util.CodeResult;
 import Util.Messaggio;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +28,22 @@ public class ApiTest {
         return TestGetDb();
     }
 
+    @GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/prova")
+    public Messaggio risposta(Messaggio messaggio){
+        ArrayList<String> listaRicevuta = new ArrayList<>();
+        listaRicevuta.add("G00001");
+        //latitudine
+        listaRicevuta.add("13.55026");
+        //longitudine
+        listaRicevuta.add("42.39557");
+        ControllerFacade controllerFacade = new ControllerFacade();
+        Messaggio risposta = controllerFacade.execute("UpPositionG", listaRicevuta);
+
+        return risposta;
+    }
     private String TestGetDb(){
         //questa riga sarà sostituita dalla varibile che giunge mediante il @Consumes
         ArrayList<String> listaRicevuta = new ArrayList<>();

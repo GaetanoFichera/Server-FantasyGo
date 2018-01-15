@@ -2,6 +2,7 @@ package Util;
 
 import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -25,6 +26,13 @@ public class HibernateUtil {
     private static SessionFactory sessionJavaConfigFactory;
 
     private static ServiceRegistry registry;
+
+    public static Session getSession(){
+        sessionFactory = getSessionJavaConfigFactory();
+        Session session = sessionFactory.openSession();
+        session.getTransaction().begin();
+        return session;
+    }
 
     /*
     private static SessionFactory buildSessionFactory() {
@@ -82,6 +90,10 @@ public class HibernateUtil {
             props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/FantasyGo");
             props.put("hibernate.connection.username", "root");
             props.put("hibernate.connection.password", "mysql");
+            props.put("c3p0.min_size", 1);
+            props.put("c3p0.max_size", 50);
+            props.put("hibernate.c3p0.timeout", 10);
+            props.put("hibernate.c3p0.max_statements", 50);
             props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
             props.put("hibernate.hbm2ddl.auto", "update");
             props.put("hibernate.show_sql", "true");
@@ -113,6 +125,7 @@ public class HibernateUtil {
         if (registry != null) {
             StandardServiceRegistryBuilder.destroy(registry);
         }
+        getSession().close();
     }
 
     /*
@@ -132,5 +145,15 @@ public class HibernateUtil {
     public static SessionFactory getSessionJavaConfigFactory() {
         if(sessionJavaConfigFactory == null) sessionJavaConfigFactory = buildSessionJavaConfigFactory();
         return sessionJavaConfigFactory;
+    }
+
+    public static Giocatore retrieveGiocatore(String idGiocatore){
+
+        Giocatore giocatore = getSession().find(Giocatore.class, idGiocatore);
+        return giocatore;
+    }
+    public static ZonaDiCaccia retrieveZonaDiCaccia(String idZonaDiCaccia){
+        ZonaDiCaccia zonaDiCaccia= getSession().find(ZonaDiCaccia.class, idZonaDiCaccia);
+        return zonaDiCaccia;
     }
 }
