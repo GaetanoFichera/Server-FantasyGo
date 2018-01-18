@@ -2,13 +2,14 @@ package Util;
 
 import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-
 import java.util.Properties;
 
 /**
@@ -19,66 +20,12 @@ public class HibernateUtil {
     //XML based configuration
     private static SessionFactory sessionFactory;
 
-    //Annotation based configuration
-    private static SessionFactory sessionAnnotationFactory;
-
-    //Property based configuration
-    private static SessionFactory sessionJavaConfigFactory;
-
     private static ServiceRegistry registry;
 
     public static Session getSession(){
-        sessionFactory = getSessionJavaConfigFactory();
-        Session session = sessionFactory.openSession();
-        session.getTransaction().begin();
-        return session;
+        if(sessionFactory == null) sessionFactory = buildSessionJavaConfigFactory();
+        return sessionFactory.openSession();
     }
-
-    /*
-    private static SessionFactory buildSessionFactory() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
-            Configuration configuration = new Configuration();
-            configuration.configure();
-            System.out.println("Hibernate Configuration loaded");
-
-            registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            System.out.println("Hibernate serviceRegistry created");
-
-            SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
-
-            return sessionFactory;
-        }
-        catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-    */
-
-    /*
-    private static SessionFactory buildSessionAnnotationFactory() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
-            Configuration configuration = new Configuration();
-            configuration.configure("hibernate-annotation.cfg.xml");
-            System.out.println("Hibernate Annotation Configuration loaded");
-
-            registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            System.out.println("Hibernate Annotation serviceRegistry created");
-
-            SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
-
-            return sessionFactory;
-        }
-        catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-    */
 
     private static SessionFactory buildSessionJavaConfigFactory() {
         try {
@@ -88,73 +35,54 @@ public class HibernateUtil {
             Properties props = new Properties();
             props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/FantasyGo");
-            props.put("hibernate.connection.username", "root");
-            props.put("hibernate.connection.password", "");
-            //props.put("c3p0.min_size", 1);
-            //props.put("c3p0.max_size", 50);
-            //props.put("hibernate.c3p0.timeout", 10);
-            //props.put("hibernate.c3p0.max_statements", 50);
+            props.put("hibernate.connection.username", "fantasygo");
+            props.put("hibernate.connection.password", "password");
             props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
             props.put("hibernate.hbm2ddl.auto", "update");
             props.put("hibernate.show_sql", "true");
             props.put("hibernate.format_sql", "true");
+            //props.put("hibernate.temp.use_jdbc_metadata_defaults", "false");
+
+            // c3p0 configuration
+            props.put(Environment.C3P0_MIN_SIZE, 5);         //Minimum size of pool
+            props.put(Environment.C3P0_MAX_SIZE, 30);        //Maximum size of pool
+            props.put(Environment.C3P0_ACQUIRE_INCREMENT, 1);//Number of connections acquired at a time when pool is exhausted
+            props.put(Environment.C3P0_TIMEOUT, 1800);       //Connection idle time
+            props.put(Environment.C3P0_MAX_STATEMENTS, 150); //PreparedStatement cache size
+            props.put(Environment.C3P0_CONFIG_PREFIX + ".initialPoolSize", 5); // i.e. 'hibernate.c3p0.initialPoolSize'
+            props.put(Environment.C3P0_IDLE_TEST_PERIOD, 30);
 
             configuration.setProperties(props);
 
-
-            //we can set mapping file or class with annotation
-            //addClass(Employee1.class) will look for resource
-            // com/journaldev/hibernate/model/Employee1.hbm.xml (not good)
             configuration.addAnnotatedClass(Giocatore.class);
             configuration.addAnnotatedClass(ZonaDiCaccia.class);
 
             registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            System.out.println("Hibernate Java Config serviceRegistry created");
+            System.out.println("Hibernate Java Config ServiceRegistry created");
 
-            SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
-
-            return sessionFactory;
+            sessionFactory = configuration.buildSessionFactory(registry);
         }
         catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
+        return sessionFactory;
     }
 
     public static void shutdown() {
         if (registry != null) {
             StandardServiceRegistryBuilder.destroy(registry);
         }
-        //prima di chiudere controllare se il factory è diverso da null e quindi se è stato creato
-        getSessionJavaConfigFactory().close();
-    }
-
-    /*
-    public static SessionFactory getSessionFactory() {
-        if(sessionFactory == null) sessionFactory = buildSessionFactory();
-        return sessionFactory;
-    }
-    */
-
-    /*
-    public static SessionFactory getSessionAnnotationFactory() {
-        if(sessionAnnotationFactory == null) sessionAnnotationFactory = buildSessionAnnotationFactory();
-        return sessionAnnotationFactory;
-    }
-    */
-
-    public static SessionFactory getSessionJavaConfigFactory() {
-        if(sessionJavaConfigFactory == null) sessionJavaConfigFactory = buildSessionJavaConfigFactory();
-        return sessionJavaConfigFactory;
     }
 
     public static Giocatore retrieveGiocatore(String idGiocatore){
-
         Giocatore giocatore = getSession().find(Giocatore.class, idGiocatore);
+
         return giocatore;
     }
     public static ZonaDiCaccia retrieveZonaDiCaccia(String idZonaDiCaccia){
-        ZonaDiCaccia zonaDiCaccia= getSession().find(ZonaDiCaccia.class, idZonaDiCaccia);
+        ZonaDiCaccia zonaDiCaccia = getSession().find(ZonaDiCaccia.class, idZonaDiCaccia);
+
         return zonaDiCaccia;
     }
 }

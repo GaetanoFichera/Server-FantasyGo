@@ -20,7 +20,7 @@ public class SaveDataTest {
         Session session = null;
 
         try {
-            session = HibernateUtil.getSessionJavaConfigFactory().openSession();
+            session = HibernateUtil.getSession();
             transaction = session.getTransaction();
             transaction.begin();
 
@@ -318,7 +318,6 @@ public class SaveDataTest {
                 session.close();
             }
         }
-
         HibernateUtil.shutdown();
     }
 }

@@ -27,8 +27,6 @@ public class ControllerFacade {
             new Exception("Controller" + richiesta + " non trovato");
         }
 
-        HibernateUtil.shutdown();
-
         return risposta;
     }
 }

@@ -14,9 +14,8 @@ import java.util.List;
 public class RetrieveDataTest {
 
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionJavaConfigFactory();
 
-        Session session = sessionFactory.openSession();
+        Session session = HibernateUtil.getSession();
 
         try {
             List<ZonaDiCaccia> zonedicaccias = session.createQuery(

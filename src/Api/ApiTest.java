@@ -44,15 +44,14 @@ public class ApiTest {
         //longitudine
         listaRicevuta.add("42.39557");
         ControllerFacade controllerFacade = new ControllerFacade();
+
         Messaggio risposta = controllerFacade.execute("UpPositionG", listaRicevuta);
 
         return risposta;
     }
 
     private String RetrieveData(){
-        SessionFactory sessionFactory = HibernateUtil.getSessionJavaConfigFactory();
-
-        Session session = sessionFactory.openSession();
+        Session session = HibernateUtil.getSession();
 
         ZonaDiCaccia zona = null;
 
@@ -106,7 +105,7 @@ public class ApiTest {
         Session session = null;
 
         try {
-            session = HibernateUtil.getSessionJavaConfigFactory().openSession();
+            session = HibernateUtil.getSession();
             transaction = session.getTransaction();
             transaction.begin();
 
