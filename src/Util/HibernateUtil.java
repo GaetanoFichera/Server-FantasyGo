@@ -89,11 +89,11 @@ public class HibernateUtil {
             props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/FantasyGo");
             props.put("hibernate.connection.username", "root");
-            props.put("hibernate.connection.password", "mysql");
-            props.put("c3p0.min_size", 1);
-            props.put("c3p0.max_size", 50);
-            props.put("hibernate.c3p0.timeout", 10);
-            props.put("hibernate.c3p0.max_statements", 50);
+            props.put("hibernate.connection.password", "");
+            //props.put("c3p0.min_size", 1);
+            //props.put("c3p0.max_size", 50);
+            //props.put("hibernate.c3p0.timeout", 10);
+            //props.put("hibernate.c3p0.max_statements", 50);
             props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
             props.put("hibernate.hbm2ddl.auto", "update");
             props.put("hibernate.show_sql", "true");
@@ -125,7 +125,8 @@ public class HibernateUtil {
         if (registry != null) {
             StandardServiceRegistryBuilder.destroy(registry);
         }
-        getSession().close();
+        //prima di chiudere controllare se il factory è diverso da null e quindi se è stato creato
+        getSessionJavaConfigFactory().close();
     }
 
     /*
