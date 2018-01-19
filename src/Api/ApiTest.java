@@ -24,18 +24,21 @@ import java.util.List;
 public class ApiTest {
 
     @GET
-    @Produces("text/plain")
-    @Path("/testgetDb")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/TestConnection")
     public String getClichedMessage(){
 
         //SaveZoneDiCaccia();
-        return " ok ";
+
+        String risposta = "Ciao sono il Server di FantasyGo, il più figo che ci sia ;)";
+
+        return risposta;
     }
 
     @GET
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/prova")
+    @Path("/TestDb")
     public Messaggio risposta(Messaggio messaggio){
         ArrayList<String> listaRicevuta = new ArrayList<>();
         listaRicevuta.add("G00001");
