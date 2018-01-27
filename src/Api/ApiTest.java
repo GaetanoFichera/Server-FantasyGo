@@ -26,11 +26,16 @@ public class ApiTest {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/TestConnection")
-    public String getClichedMessage(){
+    public Messaggio getClichedMessage(){
 
         //SaveZoneDiCaccia();
 
-        String risposta = "Ciao sono il Server di FantasyGo, il più figo che ci sia ;)";
+        Messaggio risposta = new Messaggio();
+        risposta.setMessaggio(CodeResult.OkSenzaAggiornamenti);
+        String messaggio = "Ciao sono il Server di FantasyGo, il più figo che ci sia ;)";
+        risposta.setObject(messaggio);
+
+        System.out.println(risposta.toString());
 
         return risposta;
     }
