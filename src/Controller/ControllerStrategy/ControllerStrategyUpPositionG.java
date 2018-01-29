@@ -80,20 +80,4 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
 
         return messaggioRisposta;
     }
-
-    public static void main(String[] args) {
-
-        ArrayList<String> listaRicevuta = new ArrayList<>();
-
-        listaRicevuta.add("G00001");
-        //latitudine
-        listaRicevuta.add("13.55026");
-        //longitudine
-        listaRicevuta.add("42.39557");
-
-        //scrivere il test per riprendere i dati dal server
-        ControllerFacade controllerFacade = new ControllerFacade();
-        Messaggio risposta = controllerFacade.execute("UpPositionG", listaRicevuta);
-        System.out.println(risposta);
-    }
 }
