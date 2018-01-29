@@ -1,6 +1,8 @@
 package Util;
 
 import Entity.Giocatore;
+import Entity.Mostro;
+import Entity.Personaggio;
 import Entity.ZonaDiCaccia;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -35,9 +37,9 @@ public class HibernateUtil {
             Properties props = new Properties();
             props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/FantasyGo");
-            props.put("hibernate.connection.username", "fantasygo");
-            props.put("hibernate.connection.password", "password");
-            props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+            props.put("hibernate.connection.username", "root");
+            props.put("hibernate.connection.password", "mysql");
+            props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
             props.put("hibernate.hbm2ddl.auto", "update");
             props.put("hibernate.show_sql", "true");
             props.put("hibernate.format_sql", "true");
@@ -56,6 +58,8 @@ public class HibernateUtil {
 
             configuration.addAnnotatedClass(Giocatore.class);
             configuration.addAnnotatedClass(ZonaDiCaccia.class);
+            configuration.addAnnotatedClass(Mostro.class);
+            configuration.addAnnotatedClass(Personaggio.class);
 
             registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             System.out.println("Hibernate Java Config ServiceRegistry created");
@@ -80,9 +84,22 @@ public class HibernateUtil {
 
         return giocatore;
     }
+
     public static ZonaDiCaccia retrieveZonaDiCaccia(String idZonaDiCaccia){
         ZonaDiCaccia zonaDiCaccia = getSession().find(ZonaDiCaccia.class, idZonaDiCaccia);
 
         return zonaDiCaccia;
+    }
+
+    public static Personaggio retrievePersonaggio(String idPersonaggio){
+        Personaggio personaggio = getSession().find(Personaggio.class, idPersonaggio);
+
+        return personaggio;
+    }
+
+    public static Mostro retrieveMostro(String idMostro){
+        Mostro mostro = getSession().find(Mostro.class, idMostro);
+
+        return mostro;
     }
 }

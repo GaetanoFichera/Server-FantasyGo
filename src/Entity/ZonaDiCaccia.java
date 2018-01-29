@@ -2,11 +2,11 @@ package Entity;
 
 import Util.Coordinata;
 import org.apache.commons.lang.SerializationUtils;
+import org.omg.CORBA.PRIVATE_MEMBER;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by gaetano on 11/10/17.
@@ -23,6 +23,13 @@ public class ZonaDiCaccia {
     private byte[] CoordinataCentroAsByteArray;
     @Column(name = "CONFINI", nullable = false)
     private byte[] CoordinateConfiniAsByteArray;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "REL_MOSTRI_ZDC",
+            joinColumns = {@JoinColumn(name = "ZDC_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ID")}
+    )
+    private Set<Mostro> mostri;
 
     public ZonaDiCaccia() {}
 
@@ -72,5 +79,13 @@ public class ZonaDiCaccia {
 
     public void setCoordinateConfini(ArrayList<Coordinata> coordinateConfini){
         CoordinateConfiniAsByteArray = SerializationUtils.serialize(coordinateConfini);
+    }
+
+    public Set<Mostro> getMostri() {
+        return mostri;
+    }
+
+    public void setMostri(Set<Mostro> mostri) {
+        this.mostri = mostri;
     }
 }
