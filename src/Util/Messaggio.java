@@ -1,11 +1,8 @@
 package Util;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Created by root on 11/10/17.
  */
-@XmlRootElement
 public class Messaggio {
 
     private int messaggio; // Il Messaggio è codificato in numeri: Ex. 100 = OK

@@ -67,7 +67,6 @@ public class ZonaDiCaccia {
     }
 
     public ArrayList<Coordinata> getCoordinateConfini(){
-        System.out.println("sono dentro");
         return ((ArrayList<Coordinata>) SerializationUtils.deserialize(CoordinateConfiniAsByteArray));
     }
 

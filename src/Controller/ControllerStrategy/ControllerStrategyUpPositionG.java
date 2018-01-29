@@ -36,7 +36,8 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
             session.getTransaction().begin();
 
             Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore);
-            System.out.println("Giocatore" + giocatore.getId());
+            System.out.println("Giocatore: " + giocatore.getId());
+
             ZonaDiCaccia zonaDiCacciaGiocatore = HibernateUtil.retrieveZonaDiCaccia(giocatore.getZonaDiCacciaAssegnata().getId());
             if(!ZonaDiCacciaUtil.coordinataInsideZona(zonaDiCacciaGiocatore.getCoordinateConfini(), coordinataDelGiocatore)){
                 List<ZonaDiCaccia> zone =  session.createCriteria(ZonaDiCaccia.class).list();
@@ -79,23 +80,6 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
 
         return messaggioRisposta;
     }
-    public void addConfini(ZonaDiCaccia zonaDiCacciagiocatore, Session session){
-        Coordinata coordinata1 = new Coordinata(13.3360291,42.3763001);
-        Coordinata coordinata2 = new Coordinata(13.3236694,42.3544847);
-        Coordinata coordinata3 = new Coordinata(13.3511353,42.3554995);
-        Coordinata coordinata4 = new Coordinata(13.3731079,42.3483953);
-        Coordinata coordinata5 = new Coordinata(13.3858109,42.3727493);
-
-        ArrayList<Coordinata> region = new ArrayList<>();
-        region.add(coordinata1);
-        region.add(coordinata3);
-        region.add(coordinata4);
-        region.add(coordinata5);
-        zonaDiCacciagiocatore.setCoordinateConfini(region);
-        zonaDiCacciagiocatore.setCoordinataCentro(coordinata2);
-
-        session.update(zonaDiCacciagiocatore);
-    }
 
     public static void main(String[] args) {
 
@@ -113,5 +97,3 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
         System.out.println(risposta);
     }
 }
-
-

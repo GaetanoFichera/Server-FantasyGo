@@ -8,7 +8,6 @@ import Util.Messaggio;
  * Created by root on 11/10/17.
  */
 public class ControllerFacade {
-
     public Messaggio execute(String richiesta, Object object){
         Messaggio risposta = null;
 

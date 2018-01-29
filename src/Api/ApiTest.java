@@ -31,7 +31,8 @@ public class ApiTest {
         //SaveZoneDiCaccia();
 
         Messaggio risposta = new Messaggio();
-        risposta.setMessaggio(CodeResult.OkSenzaAggiornamenti);
+        risposta.setMessaggio(CodeResult.OkConAggiornamenti);
+
         String messaggio = "Ciao sono il Server di FantasyGo, il più figo che ci sia ;)";
         risposta.setObject(messaggio);
 
@@ -54,6 +55,21 @@ public class ApiTest {
         ControllerFacade controllerFacade = new ControllerFacade();
 
         Messaggio risposta = controllerFacade.execute("UpPositionG", listaRicevuta);
+
+        return risposta;
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/UpdateLocation")
+    public Messaggio updatePosition(Messaggio messaggio){
+
+        ControllerFacade controllerFacade = new ControllerFacade();
+
+        System.out.println("Messaggio Ricevuto: " + messaggio.toString());
+
+        Messaggio risposta = controllerFacade.execute("UpPositionG", messaggio.getObject());
 
         return risposta;
     }
@@ -108,6 +124,7 @@ public class ApiTest {
         return risultato;
     }
 
+    //latitudine e longitudine sono invertite
     public void SaveZoneDiCaccia() {
         Transaction transaction = null;
         Session session = null;

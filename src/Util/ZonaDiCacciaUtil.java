@@ -92,6 +92,8 @@ public class ZonaDiCacciaUtil {
 
     public static ZonaDiCaccia areaContainingCoordinata(ArrayList<Coordinata> centriNonOrdinati, ArrayList<ZonaDiCaccia> zone, Coordinata punto){
 
+        System.out.println("Calcolo Nuova Zona: " + centriNonOrdinati + " " + zone + " " + punto);
+
         boolean trovata = false;
         ZonaDiCaccia zonaContainingCoordinata = null;
         ArrayList<Coordinata> centri = coordinataSort(centriNonOrdinati, punto);
