@@ -7,6 +7,8 @@ public class CodeResult {
     public static final int OkSenzaAggiornamenti = 100; //Operazione andata a buon fine senza aggiornamento dati
     public static final int OkConAggiornamenti = 101; //Operazione andata a buon fine con aggiornamento dati
     public static final int ErroreRitenta = 102; //Operazione fallita, ritentare
+    public static final int IdSbagliato = 103; //Operazione fallita, ritentare
+
 
     public static String getMessaggioErrore(int codiceErrore){
         String messaggioErrore = null;
