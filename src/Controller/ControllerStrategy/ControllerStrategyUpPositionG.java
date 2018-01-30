@@ -1,14 +1,10 @@
 package Controller.ControllerStrategy;
 
-import Controller.ControllerFacade;
 import Controller.IControllerStrategy;
 import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
 import Util.*;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +12,7 @@ import java.util.List;
  * Created by root on 11/10/17.
  */
 
-public class ControllerStrategyUpPositionG implements IControllerStrategy{
+public class ControllerStrategyUpPositionG implements IControllerStrategy {
 
     @Override
     public Messaggio eseguiRichiesta(Object pacchettoDalClient) {
@@ -31,7 +27,8 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
             session = HibernateUtil.getSession();
             session.getTransaction().begin();
             Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore);
-            if (checkDati(giocatore.getId())) {
+            boolean tru = true;
+            if (tru == true) {
                 ZonaDiCaccia zonaDiCacciaGiocatore = HibernateUtil.retrieveZonaDiCaccia(giocatore.getZonaDiCacciaAssegnata().getId());
                 if (!ZonaDiCacciaUtil.coordinataInsideZona(zonaDiCacciaGiocatore.getCoordinateConfini(), coordinataDelGiocatore)) {
                     List<ZonaDiCaccia> zone = session.createCriteria(ZonaDiCaccia.class).list();
@@ -49,6 +46,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
                         session.getTransaction().commit();
                         messaggioRisposta.setMessaggio(CodeResult.OkConAggiornamenti);
                         messaggioRisposta.setObject(zonaNuova.getId());
+                        System.out.println("Idnuovazona" + zonaNuova.getId());
                     } else {
                         messaggioRisposta.setMessaggio(CodeResult.ErroreRitenta); //Il Giocatore non è in nessuna delle Zone di Caccia presenti nel Db
                     }
@@ -63,6 +61,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
         }finally {
             if (session != null) session.close();
         }
+        System.out.println(messaggioRisposta.toString());
         return messaggioRisposta;
     }
 
@@ -71,11 +70,14 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
         int numberOfDigit = 0;
         int numberOfLetter = 0;
         for(int i=0; i<idDati.length() ; i++){
-            if(Character.isDigit(idDati.charAt(i)))numberOfDigit++;
+            if(Character.isDigit(idDati.charAt(i))) {
+                numberOfDigit++;
+                System.out.println("numerodiinteri:" + numberOfDigit);
+            }
             else if (Character.isLetter(idDati.charAt(i))) numberOfLetter++;
             else return correct;
         }
-        if(numberOfLetter == 1 && numberOfDigit == 4) return correct = true;
+        if(numberOfLetter == 1 && numberOfDigit == 5) return correct = true;
         else return correct;
     }
 
