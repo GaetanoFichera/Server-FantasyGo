@@ -22,20 +22,21 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
     public Messaggio eseguiRichiesta(Object pacchettoDalClient) {
         Messaggio messaggioRisposta = new Messaggio();
 
+        //Trasformo mediante Cast il Pacchetto Ricevuto dal Client in quello che io desidero
+        ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
+        Coordinata coordinataDelGiocatore = new Coordinata();
+        coordinataDelGiocatore.setLatitudine(Double.valueOf(datiDalGiocatore.get(1)));
+        coordinataDelGiocatore.setLongitudine(Double.valueOf(datiDalGiocatore.get(2)));
+        String idGiocatore = datiDalGiocatore.get(0);
+
         Session session = null;
 
         try{
-            //Trasformo mediante Cast il Pacchetto Ricevuto dal Client in quello che io desidero
-            ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
-            Coordinata coordinataDelGiocatore = new Coordinata();
-            coordinataDelGiocatore.setLatitudine(Double.valueOf(datiDalGiocatore.get(1)));
-            coordinataDelGiocatore.setLongitudine(Double.valueOf(datiDalGiocatore.get(2)));
-            String idGiocatore = datiDalGiocatore.get(0);
-
             session = HibernateUtil.getSession();
             session.getTransaction().begin();
 
             Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore);
+
             System.out.println("Giocatore: " + giocatore.getId());
 
             ZonaDiCaccia zonaDiCacciaGiocatore = HibernateUtil.retrieveZonaDiCaccia(giocatore.getZonaDiCacciaAssegnata().getId());
@@ -79,5 +80,13 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy{
         // HibernateUtil.shutdown();
 
         return messaggioRisposta;
+    }
+
+    private boolean checkDati(String idDati){
+        return true;
+    }
+
+    private Messaggio applicaModifiche(Messaggio messaggio){
+        return null;
     }
 }

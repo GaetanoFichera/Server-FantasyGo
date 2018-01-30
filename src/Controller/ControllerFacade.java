@@ -8,6 +8,8 @@ import Util.Messaggio;
  * Created by root on 11/10/17.
  */
 public class ControllerFacade {
+    static final String UP_POSITION_GIOCATORE = "UpPositionG";
+
     public Messaggio execute(String richiesta, Object object){
         Messaggio risposta = null;
 
