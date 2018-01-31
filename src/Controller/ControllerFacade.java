@@ -1,7 +1,5 @@
 package Controller;
 
-import Controller.ControllerStrategy.ControllerStrategyUpPositionG;
-import Util.HibernateUtil;
 import Util.Messaggio;
 
 /**

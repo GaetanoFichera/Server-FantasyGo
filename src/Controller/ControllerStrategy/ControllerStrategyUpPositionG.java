@@ -26,10 +26,9 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
         try{
             session = HibernateUtil.getSession();
             session.getTransaction().begin();
-            Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore);
-            boolean tru = true;
-            if (tru == true) {
-                ZonaDiCaccia zonaDiCacciaGiocatore = HibernateUtil.retrieveZonaDiCaccia(giocatore.getZonaDiCacciaAssegnata().getId());
+            if(checkDati(idGiocatore)) {
+                Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore, session);
+                ZonaDiCaccia zonaDiCacciaGiocatore = HibernateUtil.retrieveZonaDiCaccia(giocatore.getZonaDiCacciaAssegnata().getId(), session);
                 if (!ZonaDiCacciaUtil.coordinataInsideZona(zonaDiCacciaGiocatore.getCoordinateConfini(), coordinataDelGiocatore)) {
                     List<ZonaDiCaccia> zone = session.createCriteria(ZonaDiCaccia.class).list();
                     ArrayList<ZonaDiCaccia> zoneArrayList = new ArrayList<>();
@@ -41,7 +40,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
                     ZonaDiCaccia zonaNuova = ZonaDiCacciaUtil.areaContainingCoordinata(coordinateCentri, zoneArrayList, coordinataDelGiocatore);
 
                     if (zonaNuova != null) {//Il Giocatore ha cambiato Zona di Caccia
-                        giocatore.setZonaDiCacciaAssegnata(HibernateUtil.retrieveZonaDiCaccia(zonaNuova.getId()));
+                        giocatore.setZonaDiCacciaAssegnata(HibernateUtil.retrieveZonaDiCaccia(zonaNuova.getId(), session));
                         session.saveOrUpdate(giocatore);
                         session.getTransaction().commit();
                         messaggioRisposta.setMessaggio(CodeResult.OkConAggiornamenti);
@@ -66,22 +65,25 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
     }
 
     private boolean checkDati(String idDati){
-        boolean correct = false;
         int numberOfDigit = 0;
-        int numberOfLetter = 0;
-        for(int i=0; i<idDati.length() ; i++){
-            if(Character.isDigit(idDati.charAt(i))) {
-                numberOfDigit++;
-                System.out.println("numerodiinteri:" + numberOfDigit);
+        if(Character.isLetter(idDati.charAt(0))) {
+            for (int i = 1; i < idDati.length(); i++) {
+                if (Character.isDigit(idDati.charAt(i))) numberOfDigit++;
+                else return false;
             }
-            else if (Character.isLetter(idDati.charAt(i))) numberOfLetter++;
-            else return correct;
-        }
-        if(numberOfLetter == 1 && numberOfDigit == 5) return correct = true;
-        else return correct;
+        }else return false;
+        if(numberOfDigit == 5) return true;
+        else return false;
     }
 
     private Messaggio applicaModifiche(Messaggio messaggio){
         return null;
+    }
+
+    public static void main(String[] args){
+        ControllerStrategyUpPositionG controllerStrategyUpPositionG = new ControllerStrategyUpPositionG();
+        String string = "G00001";
+        boolean response = controllerStrategyUpPositionG.checkDati(string);
+        System.out.println(response);
     }
 }

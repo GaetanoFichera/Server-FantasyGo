@@ -473,7 +473,7 @@ public class ApiTest {
             session = HibernateUtil.getSession();
             transaction = session.getTransaction();
             transaction.begin();
-            ZonaDiCaccia zonaDiCaccia = HibernateUtil.retrieveZonaDiCaccia("ZDC001");
+            ZonaDiCaccia zonaDiCaccia = HibernateUtil.retrieveZonaDiCaccia("ZDC001", session);
             g1.setZonaDiCacciaAssegnata(zonaDiCaccia);
             session.saveOrUpdate(Gaetano);
             //session.saveOrUpdate(g1);
