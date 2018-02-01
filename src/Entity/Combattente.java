@@ -19,11 +19,15 @@ public class Combattente {
     @Column(name = "EQUIPAGGIAMENTO")
     private byte[] equipaggiamentoAsByteArray;
 
+    public Combattente(){}
+
+    /*
     public Combattente(String id, Caratteristiche caratteristiche, Equipaggiamento equipaggiamento) {
         this.id = id;
         this.setCaratteristiche(caratteristiche);
         this.setEquipaggiamento(equipaggiamento);
     }
+    */
 
     public String getId() {
         return id;

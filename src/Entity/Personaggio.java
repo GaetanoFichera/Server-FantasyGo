@@ -29,7 +29,11 @@ public class Personaggio extends Combattente {
     @JoinColumn(name = "G_ID", nullable = false)
     private Giocatore giocatore;
 
+    public Personaggio(){
+        super();
+    }
 
+    /*
     public Personaggio(String id, String nome, Caratteristiche caratteristiche, Equipaggiamento equipaggiamento, int bottino, String sesso,
                        String razza, String classe, int puntiEsperienza, ArrayList<String> inventario, int oro) {
         super(id, caratteristiche, equipaggiamento);
@@ -42,6 +46,7 @@ public class Personaggio extends Combattente {
         this.oro = oro;
         this.nome = nome;
     }
+    */
 
     public String getNome() { return nome; }
 

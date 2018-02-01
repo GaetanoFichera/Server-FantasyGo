@@ -23,7 +23,7 @@ public class ZonaDiCaccia {
     private byte[] CoordinataCentroAsByteArray;
     @Column(name = "CONFINI", nullable = false)
     private byte[] CoordinateConfiniAsByteArray;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "REL_MOSTRI_ZDC",
             joinColumns = {@JoinColumn(name = "ZDC_ID")},

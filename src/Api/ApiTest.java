@@ -28,7 +28,7 @@ public class ApiTest {
     @Path("/TestConnection")
     public Messaggio getClichedMessage() {
 
-        SaveZoneDiCaccia();
+        //SaveZoneDiCaccia();
 
         Messaggio risposta = new Messaggio();
         risposta.setMessaggio(CodeResult.OkConAggiornamenti);
@@ -64,12 +64,17 @@ public class ApiTest {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/UpdateLocation")
     public Messaggio updatePosition(Messaggio messaggio) {
+        Messaggio risposta = new Messaggio();
 
-        ControllerFacade controllerFacade = new ControllerFacade();
+        try{
+            ControllerFacade controllerFacade = new ControllerFacade();
 
-        System.out.println("Messaggio Ricevuto: " + messaggio.toString());
+            System.out.println("Messaggio Ricevuto: " + messaggio.toString());
 
-        Messaggio risposta = controllerFacade.execute("UpPositionG", messaggio.getObject());
+            risposta  = controllerFacade.execute("UpPositionG", messaggio.getObject());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return risposta;
     }
@@ -459,6 +464,7 @@ public class ApiTest {
     @Produces({MediaType.TEXT_PLAIN})
     public String prova() {
 
+        /*
         Caratteristiche caratteristicheA = new Caratteristiche(2, 10000, 10000, 50, 21, 10, 20, 17, "AttaccoPoderoso", 0, 13, "Fis");
         ArrayList<String> inv = new ArrayList<>();
         Equipaggiamento equipaggiamento = new Equipaggiamento("W001", "A01");
@@ -486,11 +492,10 @@ public class ApiTest {
             if(session != null){
                 session.close();
             }
+            */
             return "ok";
+
         }
 
+
     }
-
-
-
-}

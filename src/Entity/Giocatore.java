@@ -1,9 +1,7 @@
 package Entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gaetano on 11/10/17.
@@ -21,11 +19,11 @@ public class Giocatore {
     private String Username;
     @Column(name = "PASSWORD", nullable = false)
     private String Password;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ZDC_ID", foreignKey = @ForeignKey(name = "ZDC_ID_FK"))
     private ZonaDiCaccia ZonaDiCacciaAssegnata;
     @OneToMany (mappedBy = "giocatore")
-    private List<Personaggio> Personaggi;
+    private Collection<Personaggio> Personaggi;
 
     public Giocatore() {}
 
@@ -35,7 +33,7 @@ public class Giocatore {
         Username = username;
         Password = password;
         ZonaDiCacciaAssegnata = zonaDiCacciaAssegnata;
-        this.Personaggi = new ArrayList<>();
+        this.Personaggi = new LinkedHashSet<>();
     }
 
     public String getId() {
@@ -70,11 +68,11 @@ public class Giocatore {
         ZonaDiCacciaAssegnata = zonaDiCacciaAssegnata;
     }
 
-    public List<Personaggio> getPersonaggi() {
+    public Collection<Personaggio> getPersonaggi() {
         return Personaggi;
     }
 
-    public void setPersonaggi(List<Personaggio> personaggi) {
+    public void setPersonaggi(Collection<Personaggio> personaggi) {
         Personaggi = personaggi;
     }
 

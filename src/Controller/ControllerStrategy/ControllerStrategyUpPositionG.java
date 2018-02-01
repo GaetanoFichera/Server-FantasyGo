@@ -4,7 +4,12 @@ import Controller.IControllerStrategy;
 import Entity.Giocatore;
 import Entity.ZonaDiCaccia;
 import Util.*;
+import Util.DBInteraction.DBInteractionCommand.FindByIdCommand;
+import Util.DBInteraction.DBInteractionCommandFactory.FindByIdCommandFactory;
+import Util.DBInteraction.ExecutionerDBInteractionFactory;
+import Util.DBInteraction.IExecutionerDBInteraction;
 import org.hibernate.Session;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +22,65 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
     @Override
     public Messaggio eseguiRichiesta(Object pacchettoDalClient) {
         Messaggio messaggioRisposta = new Messaggio();
+
+        ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
+        Coordinata coordinataDelGiocatore = new Coordinata();
+        coordinataDelGiocatore.setLatitudine(Double.valueOf(datiDalGiocatore.get(1)));
+        coordinataDelGiocatore.setLongitudine(Double.valueOf(datiDalGiocatore.get(2)));
+        String idGiocatore = datiDalGiocatore.get(0);
+        IExecutionerDBInteraction executionerDBInteraction = null;
+        System.out.println("Prima di try/catch");
+
+        try{
+
+            ExecutionerDBInteractionFactory executionerDBInteractionFactory = new ExecutionerDBInteractionFactory();
+            System.out.println("Prima di getInstance");
+            executionerDBInteraction = executionerDBInteractionFactory.getExecutionerDBIntectionInstance(ExecutionerDBInteractionFactory.HIBERNATE);
+            System.out.println("Prima di Open");
+            executionerDBInteraction.openExecution();
+
+            FindByIdCommandFactory findByIdCommandFactory = new FindByIdCommandFactory();
+            FindByIdCommand findByIdCommand = (FindByIdCommand) findByIdCommandFactory.getCommandInstance(FindByIdCommandFactory.HIBERNATE);
+            findByIdCommand.init(idGiocatore, Giocatore.class);
+            System.out.println("Executioner" + executionerDBInteraction.toString());
+            System.out.println("COmando " + findByIdCommand);
+            System.out.println("Sono prima del Command");
+            List<Object> response = null;
+            response = executionerDBInteraction.executeCommand(findByIdCommand);
+            System.out.println("risultato"+ response);
+            messaggioRisposta.setMessaggio(CodeResult.OkConAggiornamenti);
+            messaggioRisposta.setObject(((Giocatore) response.get(0)).getId());
+            System.out.println("Risposta" + messaggioRisposta);
+
+        }catch (Exception e){
+            System.out.println(e.toString());
+            if (executionerDBInteraction != null) executionerDBInteraction.roolbackExecution();
+
+        }finally{
+            if (executionerDBInteraction != null) executionerDBInteraction.closeExecution();
+        }
+
+        return messaggioRisposta;
+    }
+
+    private boolean checkDati(String idDati){
+        int numberOfDigit = 0;
+        if(Character.isLetter(idDati.charAt(0))) {
+            for (int i = 1; i < idDati.length(); i++) {
+                if (Character.isDigit(idDati.charAt(i))) numberOfDigit++;
+                else return false;
+            }
+        }else return false;
+        if(numberOfDigit == 5) return true;
+        else return false;
+    }
+
+    private Messaggio applicaModifiche(Messaggio messaggio){
+        return null;
+    }
+
+    private Messaggio vecchioExecute(Object pacchettoDalClient){
+        Messaggio messaggioRisposta = new Messaggio();
         ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
         Coordinata coordinataDelGiocatore = new Coordinata();
         coordinataDelGiocatore.setLatitudine(Double.valueOf(datiDalGiocatore.get(1)));
@@ -26,8 +90,9 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
         try{
             session = HibernateUtil.getSession();
             session.getTransaction().begin();
-            if(checkDati(idGiocatore)) {
-                Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore, session);
+            Giocatore giocatore = HibernateUtil.retrieveGiocatore(idGiocatore, session);
+            boolean tru = true;
+            if (tru == true) {
                 ZonaDiCaccia zonaDiCacciaGiocatore = HibernateUtil.retrieveZonaDiCaccia(giocatore.getZonaDiCacciaAssegnata().getId(), session);
                 if (!ZonaDiCacciaUtil.coordinataInsideZona(zonaDiCacciaGiocatore.getCoordinateConfini(), coordinataDelGiocatore)) {
                     List<ZonaDiCaccia> zone = session.createCriteria(ZonaDiCaccia.class).list();
@@ -62,28 +127,5 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
         }
         System.out.println(messaggioRisposta.toString());
         return messaggioRisposta;
-    }
-
-    private boolean checkDati(String idDati){
-        int numberOfDigit = 0;
-        if(Character.isLetter(idDati.charAt(0))) {
-            for (int i = 1; i < idDati.length(); i++) {
-                if (Character.isDigit(idDati.charAt(i))) numberOfDigit++;
-                else return false;
-            }
-        }else return false;
-        if(numberOfDigit == 5) return true;
-        else return false;
-    }
-
-    private Messaggio applicaModifiche(Messaggio messaggio){
-        return null;
-    }
-
-    public static void main(String[] args){
-        ControllerStrategyUpPositionG controllerStrategyUpPositionG = new ControllerStrategyUpPositionG();
-        String string = "G00001";
-        boolean response = controllerStrategyUpPositionG.checkDati(string);
-        System.out.println(response);
     }
 }

@@ -31,7 +31,12 @@ public class HibernateUtil {
     private static Transaction transaction;
 
     public static Session getSession(){
-        if(sessionFactory == null) sessionFactory = buildSessionJavaConfigFactory();
+        if(sessionFactory == null) {
+            System.out.println("Richiedo la buildSessionJavaConfigFactory");
+            sessionFactory = buildSessionJavaConfigFactory();
+        } else {
+            System.out.println("Factory già presente");
+        }
         return sessionFactory.openSession();
     }
 

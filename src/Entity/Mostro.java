@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -17,12 +19,16 @@ public class Mostro extends Combattente implements Cloneable {
     @Column(name = "RICOMPENSA")
     private int ricompensa;
     @ManyToMany(mappedBy = "mostri")
-    private Set<ZonaDiCaccia> zoneDiCaccia;
+    private Collection<ZonaDiCaccia> zoneDiCaccia;
 
+    public Mostro(){}
+
+    /*
     public Mostro(String id, Caratteristiche caratteristiche, Equipaggiamento equipaggiamento, int ricompensa) {
         super(id, caratteristiche, equipaggiamento);
         this.ricompensa = ricompensa;
     }
+    */
 
     public int getRicompensa() {
         return ricompensa;
@@ -32,7 +38,7 @@ public class Mostro extends Combattente implements Cloneable {
         this.ricompensa = ricompensa;
     }
 
-    public Set<ZonaDiCaccia> getZoneDiCaccia() {
+    public Collection<ZonaDiCaccia> getZoneDiCaccia() {
         return zoneDiCaccia;
     }
 
