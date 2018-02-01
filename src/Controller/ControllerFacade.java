@@ -6,12 +6,16 @@ import Util.Messaggio;
  * Created by root on 11/10/17.
  */
 public class ControllerFacade {
+    public static final String UP_POSITION_GIOCATORE = "UpPositionG";
 
     public Messaggio execute(String richiesta, Object object){
-        Messaggio risposta = null;
+        Messaggio risposta = new Messaggio();
+
         try {
             IControllerStrategy controllerStrategy = (IControllerStrategy) Class.forName("Controller.ControllerStrategy.ControllerStrategy" + richiesta).newInstance();
+
             System.out.println("Controller" + richiesta + " trovato");
+
             risposta = controllerStrategy.eseguiRichiesta(object);
         } catch (InstantiationException e) {
             System.out.println("InstantiationException");

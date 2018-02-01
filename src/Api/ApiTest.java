@@ -31,7 +31,7 @@ public class ApiTest {
         //SaveZoneDiCaccia();
 
         Messaggio risposta = new Messaggio();
-        risposta.setMessaggio(CodeResult.OkConAggiornamenti);
+        risposta.setMessaggio(Messaggio.OkConAggiornamenti);
 
         String messaggio = "Ciao sono il Server di FantasyGo, il più figo che ci sia ;)";
         risposta.setObject(messaggio);
@@ -71,7 +71,7 @@ public class ApiTest {
 
             System.out.println("Messaggio Ricevuto: " + messaggio.toString());
 
-            risposta  = controllerFacade.execute("UpPositionG", messaggio.getObject());
+            risposta  = controllerFacade.execute(ControllerFacade.UP_POSITION_GIOCATORE, messaggio.getObject());
         }catch (Exception e){
             e.printStackTrace();
         }

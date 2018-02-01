@@ -27,7 +27,7 @@ public class AggPosizioneTest {
         ControllerFacade controllerFacade = new ControllerFacade();
         Messaggio risposta = controllerFacade.execute("UpPositionG", listaRicevuta);
 
-        System.out.println(CodeResult.getMessaggioErrore(risposta.getMessaggio()));
+        System.out.println(Messaggio.getMessaggioErrore(risposta.getMessaggio()));
         if (risposta.getObject() != null) System.out.println(((ZonaDiCaccia) risposta.getObject()).getId());
     }
 }

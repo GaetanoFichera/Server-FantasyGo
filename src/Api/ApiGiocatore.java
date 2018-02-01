@@ -2,7 +2,7 @@ package Api;
 
 import Controller.ControllerFacade;
 import Util.Messaggio;
-import Util.Richiesta;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,11 +19,21 @@ public class ApiGiocatore {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/updateLocation")
+    @Path("/UpdateLocation")
     public Messaggio updateGiocatoreLocation(Messaggio messaggio) {
-        ControllerFacade controllerFacade = new ControllerFacade();
-        Messaggio risposta = controllerFacade.execute(Richiesta.UP_POSITION_GIOCATORE, messaggio);
+        System.out.println("Messaggio Ricevuto: " + messaggio.toString());
 
+        Messaggio risposta = new Messaggio();
+
+        try{
+            ControllerFacade controllerFacade = new ControllerFacade();
+
+            risposta  = controllerFacade.execute(ControllerFacade.UP_POSITION_GIOCATORE, messaggio.getObject());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println("Messaggio Da Spedire: " + messaggio.toString());
         return risposta;
     }
 }

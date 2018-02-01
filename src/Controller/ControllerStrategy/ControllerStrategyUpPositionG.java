@@ -71,12 +71,12 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
                         saveOrUpdateCommand.init(giocatore);
                         (executionerDBInteractionFactory.getExecutionerDBIntectionInstance(ExecutionerDBInteractionFactory.HIBERNATE)).executeCommand(saveOrUpdateCommand);
 
-                        messaggioRisposta.setMessaggio(CodeResult.OkConAggiornamenti);
+                        messaggioRisposta.setMessaggio(Messaggio.OkConAggiornamenti);
                         messaggioRisposta.setObject(zonaNuova.getId());
                     } else {
-                        messaggioRisposta.setMessaggio(CodeResult.ErroreRitenta); //Il Giocatore non è in nessuna delle Zone di Caccia presenti nel Db
+                        messaggioRisposta.setMessaggio(Messaggio.ErroreRitenta); //Il Giocatore non è in nessuna delle Zone di Caccia presenti nel Db
                     }
-                } else messaggioRisposta.setMessaggio(CodeResult.OkSenzaAggiornamenti);
+                } else messaggioRisposta.setMessaggio(Messaggio.OkSenzaAggiornamenti);
             } catch (Exception e) {
                 System.out.println(e.toString());
                 (executionerDBInteractionFactory.getExecutionerDBIntectionInstance(ExecutionerDBInteractionFactory.HIBERNATE)).roolbackExecution();
@@ -84,7 +84,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
             } finally {
                 (executionerDBInteractionFactory.getExecutionerDBIntectionInstance(ExecutionerDBInteractionFactory.HIBERNATE)).closeExecution();
             }
-        }else messaggioRisposta.setMessaggio(CodeResult.IdSbagliato);
+        }else messaggioRisposta.setMessaggio(Messaggio.IdSbagliato);
 
         return messaggioRisposta;
     }
@@ -101,6 +101,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
         else return false;
     }
 
+    /*
     private Messaggio vecchioExecute(Object pacchettoDalClient){
         Messaggio messaggioRisposta = new Messaggio();
         ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
@@ -157,4 +158,5 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
         System.out.println(messaggioRisposta.toString());
         return messaggioRisposta;
     }
+    */
 }

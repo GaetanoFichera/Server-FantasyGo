@@ -24,12 +24,6 @@ public class HibernateUtil {
 
     private static ServiceRegistry registry;
 
-    private static Session session;
-
-    private static final int size = 20;
-
-    private static Transaction transaction;
-
     public static Session getSession(){
         if(sessionFactory == null) {
             System.out.println("Richiedo la buildSessionJavaConfigFactory");
@@ -47,8 +41,8 @@ public class HibernateUtil {
             Properties props = new Properties();
             props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/FantasyGo");
-            props.put("hibernate.connection.username", "root");
-            props.put("hibernate.connection.password", "mysql");
+            props.put("hibernate.connection.username", "fantasygo");
+            props.put("hibernate.connection.password", "password");
             props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
             props.put("hibernate.hbm2ddl.auto", "update");
             props.put("hibernate.show_sql", "true");
@@ -60,13 +54,17 @@ public class HibernateUtil {
             props.put(Environment.C3P0_MAX_STATEMENTS, 150); //PreparedStatement cache size
             props.put(Environment.C3P0_CONFIG_PREFIX + ".initialPoolSize", 5); // i.e. 'hibernate.c3p0.initialPoolSize'
             props.put(Environment.C3P0_IDLE_TEST_PERIOD, 30);
+
             configuration.setProperties(props);
+
             configuration.addAnnotatedClass(Giocatore.class);
             configuration.addAnnotatedClass(ZonaDiCaccia.class);
             configuration.addAnnotatedClass(Mostro.class);
             configuration.addAnnotatedClass(Personaggio.class);
+
             registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             System.out.println("Hibernate Java Config ServiceRegistry created");
+
             sessionFactory = configuration.buildSessionFactory(registry);
         }
         catch (Throwable ex) {
@@ -82,6 +80,7 @@ public class HibernateUtil {
         }
     }
 
+    /*
     public static Giocatore retrieveGiocatore(String idGiocatore, Session session){
         Giocatore giocatore = session.find(Giocatore.class, idGiocatore);
 
@@ -105,4 +104,5 @@ public class HibernateUtil {
 
         return mostro;
     }
+    */
 }
