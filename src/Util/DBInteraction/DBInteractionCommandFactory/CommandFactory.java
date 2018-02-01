@@ -2,10 +2,26 @@ package Util.DBInteraction.DBInteractionCommandFactory;
 
 import Util.DBInteraction.IDBInteractionCommand;
 
-public abstract class CommandFactory {
+public  class CommandFactory {
     public final static String HIBERNATE = "HB";
+    public final static String DELETE = "DeleteCommand";
+    public final static String FINDALL = "FindAllCommand";
+    public final static String FINDBYID = "FindByIdCommand";
+    public final static String FINDBYVALUE = "FindByValueCommand";
+    public final static String SAVEORUPDATE = "SaveOrUpdateCommand";
 
-    public IDBInteractionCommand getCommandInstance(String DBInteractionType) {
-        return null;
+    public static IDBInteractionCommand getCommandInstance(String DBInteractionCommand,String DBInteractionType) {
+        IDBInteractionCommand command1 = null;
+        try {
+            command1 = (IDBInteractionCommand) Class.forName("Util.DBInteraction.DBInteractionCommand"+ DBInteractionType+"."+ DBInteractionCommand + DBInteractionType).newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return command1;
     }
 }

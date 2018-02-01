@@ -8,8 +8,8 @@ public class ExecutionerDBInteractionFactory {
     public IExecutionerDBInteraction getExecutionerDBIntectionInstance(String execDBIntType){
         IExecutionerDBInteraction executionerDBInteraction = null;
         if(execDBIntType == HIBERNATE){
-            executionerDBInteraction = new ExecutionerDBInteractionHB();
             System.out.println("Sono nell'if della factory");
+            return ExecutionerDBInteractionHB.getSingletonInstance();
         }
         /*
         try {

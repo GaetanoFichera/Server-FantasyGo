@@ -11,9 +11,14 @@ import java.util.List;
 
 @PersistenceContext(unitName="bigbrother", type= PersistenceContextType.EXTENDED)
 public class ExecutionerDBInteractionHB implements IExecutionerDBInteraction{
+    private static ExecutionerDBInteractionHB singletonInstance = new ExecutionerDBInteractionHB();
     private Session session = null;
 
-    public ExecutionerDBInteractionHB() {
+    private ExecutionerDBInteractionHB() {
+    }
+
+    public static ExecutionerDBInteractionHB getSingletonInstance(){
+        return singletonInstance;
     }
 
     @Override
@@ -24,7 +29,10 @@ public class ExecutionerDBInteractionHB implements IExecutionerDBInteraction{
     @Override
     public void closeExecution() {
         System.out.println("Sessione da chiudere " + this.session);
-        if (this.session != null) this.session.close();
+        if (this.session != null){
+            this.session.close();
+            this.session = null;
+        }
     }
 
     @Override
