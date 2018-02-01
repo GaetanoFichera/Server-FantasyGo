@@ -28,9 +28,13 @@ public class ExecutionerDBInteractionHB implements IExecutionerDBInteraction{
 
     @Override
     public void closeExecution() {
-        if (this.session != null){
-            this.session.close();
-            this.session = null;
+        try{
+            if (this.session != null){
+                if (this.session.isOpen()) this.session.close();
+                this.session = null;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

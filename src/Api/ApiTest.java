@@ -4,14 +4,10 @@ import Controller.ControllerFacade;
 import Entity.*;
 import Util.Coordinata;
 import Util.HibernateUtil;
-import Util.CodeResult;
 import Util.Messaggio;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;

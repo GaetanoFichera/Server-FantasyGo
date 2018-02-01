@@ -2,7 +2,6 @@ package Tests;
 
 import Controller.ControllerFacade;
 import Entity.ZonaDiCaccia;
-import Util.CodeResult;
 import Util.Messaggio;
 
 import java.util.ArrayList;
