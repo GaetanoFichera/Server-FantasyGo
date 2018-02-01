@@ -11,9 +11,9 @@ public  class CommandFactory {
     public final static String SAVEORUPDATE = "SaveOrUpdateCommand";
 
     public static IDBInteractionCommand getCommandInstance(String DBInteractionCommand,String DBInteractionType) {
-        IDBInteractionCommand command1 = null;
+        IDBInteractionCommand command = null;
         try {
-            command1 = (IDBInteractionCommand) Class.forName("Util.DBInteraction.DBInteractionCommand"+ DBInteractionType+"."+ DBInteractionCommand + DBInteractionType).newInstance();
+            command = (IDBInteractionCommand) Class.forName("Util.DBInteraction.DBInteractionCommand"+ DBInteractionType+"."+ DBInteractionCommand + DBInteractionType).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -22,6 +22,6 @@ public  class CommandFactory {
             e.printStackTrace();
         }
 
-        return command1;
+        return command;
     }
 }

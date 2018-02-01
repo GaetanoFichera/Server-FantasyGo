@@ -13,9 +13,7 @@ public class FindByIdCommandHB extends FindByIdCommand{
     @Override
     public List<Object> execute(Object sessionObject) {
         Session session = (Session) sessionObject;
-        System.out.println("Sessione " + session);
         if (!session.getTransaction().isActive()) session.getTransaction().begin();
-        System.out.println("Transaction" + session.getTransaction());
 
         ArrayList<Object> results = new ArrayList<>();
         results.add(session.find(getClassPersistance(), getId()));

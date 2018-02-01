@@ -23,7 +23,6 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
     @Override
     public Messaggio eseguiRichiesta(Object pacchettoDalClient) {
         Messaggio messaggioRisposta = new Messaggio();
-
         ArrayList<String> datiDalGiocatore = ((ArrayList<String>) pacchettoDalClient);
         Coordinata coordinataDelGiocatore = new Coordinata();
         coordinataDelGiocatore.setLatitudine(Double.valueOf(datiDalGiocatore.get(1)));
@@ -46,7 +45,7 @@ public class ControllerStrategyUpPositionG implements IControllerStrategy {
                 findByIdCommand.init(giocatore.getZonaDiCacciaAssegnata().getId(), ZonaDiCaccia.class);
                 List<Object> responseForCoordinate = (executionerDBInteractionFactory.getExecutionerDBIntectionInstance(ExecutionerDBInteractionFactory.HIBERNATE)).executeCommand(findByIdCommand);
                 ZonaDiCaccia zonaDiCaccia = ((ZonaDiCaccia) responseForCoordinate.get(0));
-                
+
                 if(!ZonaDiCacciaUtil.coordinataInsideZona(zonaDiCaccia.getCoordinateConfini(), coordinataDelGiocatore)){
                     FindAllCommand findAllCommand = (FindAllCommand) CommandFactory.getCommandInstance(CommandFactory.FINDALL, CommandFactory.HIBERNATE);
                     findAllCommand.init(giocatore.getZonaDiCacciaAssegnata().getClass());

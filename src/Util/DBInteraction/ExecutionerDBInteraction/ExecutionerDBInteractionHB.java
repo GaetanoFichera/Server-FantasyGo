@@ -28,7 +28,6 @@ public class ExecutionerDBInteractionHB implements IExecutionerDBInteraction{
 
     @Override
     public void closeExecution() {
-        System.out.println("Sessione da chiudere " + this.session);
         if (this.session != null){
             this.session.close();
             this.session = null;
@@ -42,8 +41,6 @@ public class ExecutionerDBInteractionHB implements IExecutionerDBInteraction{
 
     @Override
     public List<Object> executeCommand(IDBInteractionCommand command) {
-        System.out.println("ExecuteCommand");
-        System.out.println("Passo la sessione al command: " + this.session);
         return command.execute(this.session);
     }
 }
