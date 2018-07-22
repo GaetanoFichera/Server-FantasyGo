@@ -8,7 +8,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/FantasyGo</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">mysql</property>
+        <property name="hibernate.connection.password"></property>
         <property name="c3p0.*"></property>
         <property name="c3p0.min_size">1</property>
         <property name="c3p0.max_size">50</property>

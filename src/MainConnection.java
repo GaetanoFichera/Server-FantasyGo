@@ -1,3 +1,4 @@
+import Api.ApiGiocatore;
 import Api.ApiTest;
 
 import javax.ws.rs.ApplicationPath;
@@ -15,6 +16,7 @@ public class MainConnection extends Application {
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
         h.add(ApiTest.class);
+        h.add(ApiGiocatore.class);
         return h;
     }
 }

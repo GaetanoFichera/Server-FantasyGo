@@ -42,7 +42,7 @@ public class HibernateUtil {
             props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             props.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/FantasyGo");
             props.put("hibernate.connection.username", "root");
-            props.put("hibernate.connection.password", "mysql");
+            props.put("hibernate.connection.password", "");
             props.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
             props.put("hibernate.hbm2ddl.auto", "update");
             props.put("hibernate.show_sql", "true");
